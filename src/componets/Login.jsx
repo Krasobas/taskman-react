@@ -1,8 +1,10 @@
-import {Form} from './Form'
+
 import {useDispatch} from "react-redux";
 import {setUser} from "../store/slices/userSlice";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import {useNavigate} from "react-router-dom";
+import AuthForm from "./AuthForm";
+
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -11,7 +13,6 @@ const Login = () => {
         const auth = getAuth();
         signInWithEmailAndPassword(auth, email, password)
             .then(({user}) => {
-                console.log(user)
                 dispatch(setUser({
                     email: user.email,
                     id: user.uid,
@@ -19,11 +20,14 @@ const Login = () => {
                 }))
                 navigate("/")
             })
-            .catch(() => alert("Invalid user!"))
+            .catch((error) => {
+                console.error("Login error:", error);
+                alert("User not found!")
+            })
     }
 
     return (
-        <Form
+        <AuthForm
             title={"Login"}
             handleClick={handleLogin}
         />

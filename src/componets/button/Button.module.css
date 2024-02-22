@@ -9,6 +9,11 @@
     border-radius: 4px;
     text-align: center;
     cursor: pointer;
-    background-color: rgb(229, 229, 229);
+    background-color: #37c871;
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
+.button:disabled {
+    background-color: rgb(229, 229, 229);
+}

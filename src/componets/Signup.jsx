@@ -1,8 +1,9 @@
-import {Form} from './Form'
+
 import {useDispatch} from "react-redux";
 import {setUser} from "../store/slices/userSlice";
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
 import {useNavigate} from "react-router-dom";
+import AuthForm from "./AuthForm";
 
 const Signup = () => {
     const dispatch = useDispatch();
@@ -12,7 +13,6 @@ const Signup = () => {
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
             .then(({user}) => {
-                console.log(user)
                 dispatch(setUser({
                         email: user.email,
                         id: user.uid,
@@ -23,8 +23,8 @@ const Signup = () => {
             .catch(console.error)
     }
     return(
-        <Form
-            title={"Sign Up"}
+        <AuthForm
+            title={"Sign up"}
             handleClick={handleSignup}
         />
     )

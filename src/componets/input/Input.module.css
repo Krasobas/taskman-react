@@ -13,3 +13,19 @@
         margin-bottom: 0;
     }
 }
+
+.error {
+    border-color: red;
+
+}
+
+.valid {
+    border: green;
+}
+
+.label {
+    margin-right: auto;
+    margin-left: 5px;
+    margin-bottom: 3px;
+    font-weight: bolder;
+}

@@ -11,6 +11,7 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setUser(state, action) {
+            console.log('setting user')
             const {email, token, id} = action.payload;
             localStorage.setItem('email', email);
             localStorage.setItem('token', token);
@@ -18,6 +19,7 @@ const userSlice = createSlice({
             state.email = email;
             state.token = token;
             state.id = id;
+            console.log("user ok")
         },
         removeUser(state) {
             localStorage.removeItem('email');
