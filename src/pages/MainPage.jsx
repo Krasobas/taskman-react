@@ -1,18 +1,35 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Navigate} from 'react-router-dom'
 import {useAuth} from "../hooks/useAuth";
-import {useDispatch} from "react-redux";
+import {fetchTasks} from "../services/TaskService";
+import Task from "../componets/task/Task";
 
 
 export default function MainPage(){
-    const {isAuth} = useAuth();
-    console.log("main: ")
-    console.log(isAuth)
+    const {isAuth, id} = useAuth();
+    const [tasks, setTasks] = useState([]);
+    const [error, setError] = useState(null);
+
+
+    useEffect(() => {
+        const getTasks = async () => {
+            try {
+                const fetchedTasks = await fetchTasks(id);
+                setTasks(fetchedTasks);
+            } catch (error) {
+                setError(error.message);
+                console.error("Error fetching tasks: ", error);
+            }
+        };
+
+        getTasks();
+    }, [id]);
 
     return isAuth ?
         (
             <div>
-                <h1>Welcome</h1>
+                {error && <p>{error}</p>}
+                {tasks.map(task => (<Task key={task.id} id={task.id} completed={task.completed} title={task.title}></Task>))}
             </div>
         ) :
         (<Navigate to="/login"/>)
